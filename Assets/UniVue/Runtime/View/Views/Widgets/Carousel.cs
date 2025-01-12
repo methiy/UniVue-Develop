@@ -62,7 +62,7 @@ namespace UniVue.View.Widgets
             _corners = new Vector3[4];
             _timer = TweenBehavior.Timer(() => ScrollTo((_currPage + 1) % Count))
                 .Interval(_intervalTime).ExecuteNum(int.MaxValue).Delay(_intervalTime);
-            _timer.Pause(); //设为暂停状态
+            PauseTimer();//设为暂停状态
         }
 
     #region 绑定导航栏
@@ -131,7 +131,7 @@ namespace UniVue.View.Widgets
             if (_scrollTween != null || pageNumber == _currPage) return;
 
             //暂停住定时器
-            _timer.Pause();
+            PauseTimer();
 
             Vector3 startPos = _content.anchoredPosition;
             startPos.x = ((int)(startPos.x / _deltaPos.x)) * _deltaPos.x;
@@ -170,7 +170,7 @@ namespace UniVue.View.Widgets
                 .Call(() =>
                 {
                     onPosChanged.Kill(); //杀死位置改变函数
-                    _timer.Play(); //恢复定时器
+                    StartTimer(); //恢复定时器
                     _scrollTween = null;
                     _navigator?.Active(_currPage);
                 });
@@ -215,7 +215,7 @@ namespace UniVue.View.Widgets
         /// <remarks>当打开视图时你应该调用此函数</remarks>
         public void StartTimer()
         {
-            _timer.Play();
+            
         }
 
         public override void Destroy()
