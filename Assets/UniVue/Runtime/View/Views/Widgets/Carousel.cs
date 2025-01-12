@@ -49,6 +49,7 @@ namespace UniVue.View.Widgets
         /// <param name="content">装视图的区域</param>
         /// <param name="distance">rightItem.localPos.x - leftItem.localPos.x</param>
         /// <param name="intervalTime">每隔多少秒切换一次</param>
+        /// <param name="perPageScrollTime">滚动一页需要的时间</param>
         public Carousel(RectTransform viewport, RectTransform content, float distance, float intervalTime, float perPageScrollTime = 0.1f)
         {
             _viewport = viewport;
@@ -64,6 +65,7 @@ namespace UniVue.View.Widgets
             _timer.Pause(); //设为暂停状态
         }
 
+    #region 绑定导航栏
         /// <summary>
         /// 绑定轮播图导航栏
         /// </summary>
@@ -115,6 +117,10 @@ namespace UniVue.View.Widgets
             _navigator = new ImageNavigator(navigators, active, disactive);
         }
 
+        #endregion
+
+
+        #region 辅助操作
         /// <summary>
         /// 滚动到指定页
         /// </summary>
@@ -225,9 +231,9 @@ namespace UniVue.View.Widgets
                 throw new Exception($"导航状态栏的数量{count}必须与轮播图的数量{Count}一致");
         }
 
+        #endregion
+
         #region 算法实现
-
-
         private void OnPositionChanged()
         {
             //计算出视口区域的四个角
@@ -260,6 +266,7 @@ namespace UniVue.View.Widgets
         #endregion
     }
 
+    #region 导航栏实现
     internal interface INavigator
     {
         void Active(int pageNumber);
@@ -409,4 +416,5 @@ namespace UniVue.View.Widgets
             _last = null;
         }
     }
+    #endregion
 }
